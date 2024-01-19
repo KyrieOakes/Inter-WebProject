@@ -1,0 +1,530 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+    Last login: Tue Jan 16 16:59:52 on ttys000
+(base) christopherfan@mac ~ % cd /Users/christopherfan/Downloads/css-glassmorphism-button-hover-effects-glass-morphism/src
+(base) christopherfan@mac src % ls
+index.html	style.css
+(base) christopherfan@mac src % caat style.css
+zsh: command not found: caat
+(base) christopherfan@mac src % cat style.css
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap");
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Roboto", sans-serif;
+}
+body {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: linear-gradient(to bottom, #5BFDF8, #EC1D56); /*fiolet*/
+}
+.container {
+	width: 1000px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+.container .btn {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 250px;
+	height: 50px;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.container .btn a {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgba(255, 255, 255, 0.05);
+	box-shadow: 0 15px 15px rgba(0, 0, 0, 0.3);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 30px;
+	padding: 10px;
+	letter-spacing: 1px;
+	text-decoration: none;
+	overflow: hidden;
+	color: #fff;
+	font-weight: 400px;
+	z-index: 1;
+	transition: 0.5s;
+	backdrop-filter: blur(15px);
+}
+.container .btn:hover a {
+	letter-spacing: 3px;
+}
+.container .btn a::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 50%;
+	height: 100%;
+	background: linear-gradient(to left, rgba(255, 255, 255, 0.15), transparent);
+	transform: skewX(45deg) translate(0);
+	transition: 0.5s;
+	filter: blur(0px);
+}
+.container .btn:hover a::before {
+	transform: skewX(45deg) translate(200px);
+}
+.container .btn::before {
+	content: "";
+	position: absolute;
+	left: 50%;
+	transform: translatex(-50%);
+	bottom: -5px;
+	width: 30px;
+	height: 10px;
+	background: #f00;
+	border-radius: 10px;
+	transition: 0.5s;
+	transition-delay: 0.5;
+}
+.container .btn:hover::before /*lightup button*/ {
+	bottom: 0;
+	height: 50%;
+	width: 80%;
+	border-radius: 30px;
+}
+
+.container .btn::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	transform: translatex(-50%);
+	top: -5px;
+	width: 30px;
+	height: 10px;
+	background: #f00;
+	border-radius: 10px;
+	transition: 0.5s;
+	transition-delay: 0.5;
+}
+.container .btn:hover::after /*lightup button*/ {
+	top: 0;
+	height: 50%;
+	width: 80%;
+	border-radius: 30px;
+}
+.container .btn:nth-child(1)::before, /*chnage 1*/
+.container .btn:nth-child(1)::after {
+	background: #DEFC04;
+	box-shadow: 0 0 5px #ff1f71, 0 0 15px #ff1f71, 0 0 30px #ff1f71,
+		0 0 60px #ff1f71;
+}
+.container .btn:nth-child(2)::before, /* 2*/
+.container .btn:nth-child(2)::after {
+	background: #DEFC04;
+	box-shadow: 0 0 5px #2db2ff, 0 0 15px #2db2ff, 0 0 30px #2db2ff,
+		0 0 60px #2db2ff;
+}
+.container .btn:nth-child(3)::before, /* 3*/
+.container .btn:nth-child(3)::after {
+	background: #DEFC04;
+	box-shadow: 0 0 5px #1eff45, 0 0 15px #1eff45, 0 0 30px #1eff45,
+		0 0 60px #1eff45;
+}
+(base) christopherfan@mac src % vim style.css
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap");
+
+* {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Roboto", sans-serif;
+}
+body {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(to bottom, #EC1D56, #5BFDF8); /*fiolet*/
+}
+.container {
+        width: 1000px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+}
+body {
+  overflow: hidden;
+  margin: 0;
+  height: 100vh;
+  perspective: 20em;
+  background: #000;
+}
+
+div, :before {
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+.a3d {
+  top: 50%;
+  left: 50%;
+  animation: r 1.5s linear infinite;
+}
+
+@keyframes r {
+  to {
+    transform: rotateY(1turn);
+  }
+}
+.s3d {
+  --rdt: 0;
+  --ani-exp: exp3d 9s ease-in calc(var(--rdt)*-9s) infinite;
+  animation: var(--ani-exp);
+}
+.s3d:nth-child(2) {
+  --rdt: .5;
+}
+.s3d:nth-child(2) .s3gon {
+  --z-ini: 6.04609vmin;
+  --f-ini: 1;
+}
+.s3d:nth-child(2) .s4gon {
+  --z-ini: 6.47214vmin;
+  --f-ini: 0, 1;
+}
+.s3d:nth-child(2) .s5gon {
+  --z-ini: 7.60845vmin;
+  --f-ini: 0;
+}
+
+.s2d {
+  --b2: calc(1 - var(--b1));
+  --s1: calc(1 - 2*var(--b1));
+  --s: calc(-1*var(--s0)*var(--s1));
+  --o: 0;
+  --p: calc(var(--s0)*var(--s0));
+  --q: calc(1 - var(--p));
+  margin: calc(-1*var(--r2d));
+  padding: var(--r2d);
+  --z-fin: calc(var(--z-mid) + 13vmin);
+  --f-mid: 1;
+  --f-fin: .2;
+  --dir: rotatey(calc(var(--my)*72deg)) rotatex(calc(var(--s0)*(var(--b2)*var(--ax0) + var(--b1)*var(--ax1)))) var(--rx,  );
+  transform: var(--dir) translatez(var(--z-ini)) scale(var(--f-ini));
+  filter: brightness(calc(1.375 + var(--s0)*.1));
+  clip-path: polygon(var(--p-ini));
+  animation: var(--ani-exp);
+  animation-name: exp2d, fade, hole;
+}
+.s2d:not(.cup.s5gon):before {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.85);
+  animation: shade 0.75s linear calc(-0.75s - var(--my)*0.3s) infinite alternate;
+  content: "";
+}
+
+.s3gon {
+  --r2d: 4.6188vmin;
+  --my: calc(var(--j) + .25*(var(--s0) - 1));
+  --ax0: 10.81232deg;
+  --ax1: 52.62263deg;
+  --z-ini: 11.21007vmin;
+  --z-mid: 17.25616vmin;
+  --f-ini: 0;
+  background: #e2a9e5;
+  --p-ini: calc(50%*(1 + 0)) calc(50%*(1 + var(--s)*-1)), calc(50%*(1 + 0.86603)) calc(50%*(1 + var(--s)*0.5)), calc(50%*(1 + -0.86603)) calc(50%*(1 + var(--s)*0.5)), calc(50%*(1 + 0)) calc(50%*(1 + var(--s)*-1)), calc(50% + (50% - 50%)*0) calc(50% + (50% - 50%)*var(--s)*-1), calc(50% + (50% - 50%)*-0.86603) calc(50% + (50% - 50%)*var(--s)*0.5), calc(50% + (50% - 50%)*0.86603) calc(50% + (50% - 50%)*var(--s)*0.5), calc(50% + (50% - 50%)*0) calc(50% + (50% - 50%)*var(--s)*-1);
+  --p-mid: calc(50%*(1 + 0)) calc(50%*(1 + var(--s)*-1)), calc(50%*(1 + 0.86603)) calc(50%*(1 + var(--s)*0.5)), calc(50%*(1 + -0.86603)) calc(50%*(1 + var(--s)*0.5)), calc(50%*(1 + 0)) calc(50%*(1 + var(--s)*-1)), calc(50% + (50% - 5px)*0) calc(50% + (50% - 5px)*var(--s)*-1), calc(50% + (50% - 5px)*-0.86603) calc(50% + (50% - 5px)*var(--s)*0.5), calc(50% + (50% - 5px)*0.86603) calc(50% + (50% - 5px)*var(--s)*0.5), calc(50% + (50% - 5px)*0) calc(50% + (50% - 5px)*var(--s)*-1);
+  --p-fin: calc(50%*(1 + 0)) calc(50%*(1 + var(--s)*-1)), calc(50%*(1 + 0.86603)) calc(50%*(1 + var(--s)*0.5)), calc(50%*(1 + -0.86603)) calc(50%*(1 + var(--s)*0.5)), calc(50%*(1 + 0)) calc(50%*(1 + var(--s)*-1)), calc(50% + (50% - 50%)*0) calc(50% + (50% - 50%)*var(--s)*-1), calc(50% + (50% - 50%)*-0.86603) calc(50% + (50% - 50%)*var(--s)*0.5), calc(50% + (50% - 50%)*0.86603) calc(50% + (50% - 50%)*var(--s)*0.5), calc(50% + (50% - 50%)*0) calc(50% + (50% - 50%)*var(--s)*-1);
+}
+
+.s4gon {
+  --s: 1;
+  --r2d: 5.65685vmin;
+  --my: calc(var(--j) + .25*(var(--s) - 1 - var(--q)) + .5*(var(--b2) + var(--o, 0)));
+  --ax0: 31.71747deg;
+  --ax1: 58.28253deg;
+  --rx: rotate(calc(var(--b2)*(var(--q)*(1 - 2*var(--o))*31.71747deg + var(--p)*90deg)));
+  --z-ini: 10.47214vmin;
+  --z-mid: 16.94427vmin;
+  --f-ini: 1, 0;
+  background: #4b384c;
+  --p-ini: calc(50%*(1 + 0.70711)) calc(50%*(1 + var(--s)*-0.70711)), calc(50%*(1 + 0.70711)) calc(50%*(1 + var(--s)*0.70711)), calc(50%*(1 + -0.70711)) calc(50%*(1 + var(--s)*0.70711)), calc(50%*(1 + -0.70711)) calc(50%*(1 + var(--s)*-0.70711)), calc(50%*(1 + 0.70711)) calc(50%*(1 + var(--s)*-0.70711)), calc(50% + (50% - 50%)*0.70711) calc(50% + (50% - 50%)*var(--s)*-0.70711), calc(50% + (50% - 50%)*-0.70711) calc(50% + (50% - 50%)*var(--s)*-0.70711), calc(50% + (50% - 50%)*-0.70711) calc(50% + (50% - 50%)*var(--s)*0.70711), calc(50% + (50% - 50%)*0.70711) calc(50% + (50% - 50%)*var(--s)*0.70711), calc(50% + (50% - 50%)*0.70711) calc(50% + (50% - 50%)*var(--s)*-0.70711);
+  --p-mid: calc(50%*(1 + 0.70711)) calc(50%*(1 + var(--s)*-0.70711)), calc(50%*(1 + 0.70711)) calc(50%*(1 + var(--s)*0.70711)), calc(50%*(1 + -0.70711)) calc(50%*(1 + var(--s)*0.70711)), calc(50%*(1 + -0.70711)) calc(50%*(1 + var(--s)*-0.70711)), calc(50%*(1 + 0.70711)) calc(50%*(1 + var(--s)*-0.70711)), calc(50% + (50% - 5px)*0.70711) calc(50% + (50% - 5px)*var(--s)*-0.70711), calc(50% + (50% - 5px)*-0.70711) calc(50% + (50% - 5px)*var(--s)*-0.70711), calc(50% + (50% - 5px)*-0.70711) calc(50% + (50% - 5px)*var(--s)*0.70711), calc(50% + (50% - 5px)*0.70711) calc(50% + (50% - 5px)*var(--s)*0.70711), calc(50% + (50% - 5px)*0.70711) calc(50% + (50% - 5px)*var(--s)*-0.70711);
+  --p-fin: calc(50%*(1 + 0.70711)) calc(50%*(1 + var(--s)*-0.70711)), calc(50%*(1 + 0.70711)) calc(50%*(1 + var(--s)*0.70711)), calc(50%*(1 + -0.70711)) calc(50%*(1 + var(--s)*0.70711)), calc(50%*(1 + -0.70711)) calc(50%*(1 + var(--s)*-0.70711)), calc(50%*(1 + 0.70711)) calc(50%*(1 + var(--s)*-0.70711)), calc(50% + (50% - 50%)*0.70711) calc(50% + (50% - 50%)*var(--s)*-0.70711), calc(50% + (50% - 50%)*-0.70711) calc(50% + (50% - 50%)*var(--s)*-0.70711), calc(50% + (50% - 50%)*-0.70711) calc(50% + (50% - 50%)*var(--s)*0.70711), calc(50% + (50% - 50%)*0.70711) calc(50% + (50% - 50%)*var(--s)*0.70711), calc(50% + (50% - 50%)*0.70711) calc(50% + (50% - 50%)*var(--s)*-0.70711);
+}
+
+.s5gon {
+  --r2d: 6.80521vmin;
+  --my: calc((var(--j) + .25*(var(--s0) + 1)));
+  --ax0: 26.56505deg;
+  --ax1: 90deg;
+  --z-ini: 8.90813vmin;
+  --z-mid: 16.51658vmin;
+  --f-ini: 1;
+  background: #632c65;
+  --p-ini: calc(50%*(1 + 0)) calc(50%*(1 + var(--s)*-1)), calc(50%*(1 + 0.95106)) calc(50%*(1 + var(--s)*-0.30902)), calc(50%*(1 + 0.58779)) calc(50%*(1 + var(--s)*0.80902)), calc(50%*(1 + -0.58779)) calc(50%*(1 + var(--s)*0.80902)), calc(50%*(1 + -0.95106)) calc(50%*(1 + var(--s)*-0.30902)), calc(50%*(1 + 0)) calc(50%*(1 + var(--s)*-1)), calc(50% + (50% - 50%)*0) calc(50% + (50% - 50%)*var(--s)*-1), calc(50% + (50% - 50%)*-0.95106) calc(50% + (50% - 50%)*var(--s)*-0.30902), calc(50% + (50% - 50%)*-0.58779) calc(50% + (50% - 50%)*var(--s)*0.80902), calc(50% + (50% - 50%)*0.58779) calc(50% + (50% - 50%)*var(--s)*0.80902), calc(50% + (50% - 50%)*0.95106) calc(50% + (50% - 50%)*var(--s)*-0.30902), calc(50% + (50% - 50%)*0) calc(50% + (50% - 50%)*var(--s)*-1);
+  --p-mid: calc(50%*(1 + 0)) calc(50%*(1 + var(--s)*-1)), calc(50%*(1 + 0.95106)) calc(50%*(1 + var(--s)*-0.30902)), calc(50%*(1 + 0.58779)) calc(50%*(1 + var(--s)*0.80902)), calc(50%*(1 + -0.58779)) calc(50%*(1 + var(--s)*0.80902)), calc(50%*(1 + -0.95106)) calc(50%*(1 + var(--s)*-0.30902)), calc(50%*(1 + 0)) calc(50%*(1 + var(--s)*-1)), calc(50% + (50% - 5px)*0) calc(50% + (50% - 5px)*var(--s)*-1), calc(50% + (50% - 5px)*-0.95106) calc(50% + (50% - 5px)*var(--s)*-0.30902), calc(50% + (50% - 5px)*-0.58779) calc(50% + (50% - 5px)*var(--s)*0.80902), calc(50% + (50% - 5px)*0.58779) calc(50% + (50% - 5px)*var(--s)*0.80902), calc(50% + (50% - 5px)*0.95106) calc(50% + (50% - 5px)*var(--s)*-0.30902), calc(50% + (50% - 5px)*0) calc(50% + (50% - 5px)*var(--s)*-1);
+  --p-fin: calc(50%*(1 + 0)) calc(50%*(1 + var(--s)*-1)), calc(50%*(1 + 0.95106)) calc(50%*(1 + var(--s)*-0.30902)), calc(50%*(1 + 0.58779)) calc(50%*(1 + var(--s)*0.80902)), calc(50%*(1 + -0.58779)) calc(50%*(1 + var(--s)*0.80902)), calc(50%*(1 + -0.95106)) calc(50%*(1 + var(--s)*-0.30902)), calc(50%*(1 + 0)) calc(50%*(1 + var(--s)*-1)), calc(50% + (50% - 50%)*0) calc(50% + (50% - 50%)*var(--s)*-1), calc(50% + (50% - 50%)*-0.95106) calc(50% + (50% - 50%)*var(--s)*-0.30902), calc(50% + (50% - 50%)*-0.58779) calc(50% + (50% - 50%)*var(--s)*0.80902), calc(50% + (50% - 50%)*0.58779) calc(50% + (50% - 50%)*var(--s)*0.80902), calc(50% + (50% - 50%)*0.95106) calc(50% + (50% - 50%)*var(--s)*-0.30902), calc(50% + (50% - 50%)*0) calc(50% + (50% - 50%)*var(--s)*-1);
+}
+
+.inf {
+  --s0: -1;
+}
+
+.mid {
+  --s0: 0;
+}
+
+.sup {
+  --s0: 1;
+}
+
+.cup {
+  --b1: 1;
+}
+
+.lat {
+  --b1: 0;
+}
+
+@keyframes exp3d {
+  0% {
+    transform: scale3d(0, 0, 0);
+  }
+  25%, 100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+@keyframes exp2d {
+  0%, 25% {
+    transform: var(--dir) translatez(var(--z-ini)) scale(var(--f-ini));
+  }
+  50%, 75% {
+    transform: var(--dir) translatez(var(--z-mid)) scale(var(--f-mid));
+    animation-timing-function: cubic-bezier(0.21, 1, 0.32, 1);
+  }
+  100% {
+    transform: var(--dir) translatez(var(--z-fin)) scale(var(--f-fin));
+  }
+}
+@keyframes fade {
+  0%, 87.5% {
+    opacity: 0.99;
+  }
+  100% {
+    opacity: 0.01;
+  }
+}
+@keyframes hole {
+  0%, 25% {
+    clip-path: polygon(var(--p-ini));
+    animation-timing-function: ease-out;
+  }
+  50%, 75% {
+    clip-path: polygon(var(--p-mid));
+  }
+  100% {
+    clip-path: polygon(var(--p-fin));
+  }
+}
+@keyframes shade {
+  to {
+    opacity: 0.001;
+  }
+}
+
+
+</style>
+<body>
+
+<style>.s2d:nth-child(5n + 1) { --j: 0 }.s2d:nth-child(5n + 2) { --j: 1 }.s2d:nth-child(5n + 3) { --j: 2 }.s2d:nth-child(5n + 4) { --j: 3 }.s2d:nth-child(5n + 5) { --j: 4 }.s2d:nth-child(5n + 6) { --j: 5 }.s2d:nth-child(5n + 7) { --j: 6 }.s2d:nth-child(5n + 8) { --j: 7 }.s2d:nth-child(5n + 9) { --j: 8 }.s2d:nth-child(5n + 10) { --j: 9 }.s2d:nth-child(5n + 11) { --j: 10 }.s2d:nth-child(5n + 12) { --j: 11 }.s5gon.cup { --j: 0 }
+  .s4gon:nth-child(n + 16) { --o: 1 }
+</style>
+<div class="a3d">
+    <div class="s3d">
+        <div class="s12hedron">
+            <div class="s2d s5gon lat inf"></div>
+            <div class="s2d s5gon lat inf"></div>
+            <div class="s2d s5gon lat inf"></div>
+            <div class="s2d s5gon lat inf"></div>
+            <div class="s2d s5gon lat inf"></div>
+            <div class="s2d s5gon lat sup"></div>
+            <div class="s2d s5gon lat sup"></div>
+            <div class="s2d s5gon lat sup"></div>
+            <div class="s2d s5gon lat sup"></div>
+            <div class="s2d s5gon lat sup"></div>
+            <div class="s2d s5gon cup inf"></div>
+            <div class="s2d s5gon cup sup"></div>
+        </div>
+        <div class="s20hedron">
+            <div class="s2d s3gon lat inf"></div>
+            <div class="s2d s3gon lat inf"></div>
+            <div class="s2d s3gon lat inf"></div>
+            <div class="s2d s3gon lat inf"></div>
+            <div class="s2d s3gon lat inf"></div>
+            <div class="s2d s3gon cup inf"></div>
+            <div class="s2d s3gon cup inf"></div>
+            <div class="s2d s3gon cup inf"></div>
+            <div class="s2d s3gon cup inf"></div>
+            <div class="s2d s3gon cup inf"></div>
+            <div class="s2d s3gon lat sup"></div>
+            <div class="s2d s3gon lat sup"></div>
+            <div class="s2d s3gon lat sup"></div>
+            <div class="s2d s3gon lat sup"></div>
+            <div class="s2d s3gon lat sup"></div>
+            <div class="s2d s3gon cup sup"></div>
+            <div class="s2d s3gon cup sup"></div>
+            <div class="s2d s3gon cup sup"></div>
+            <div class="s2d s3gon cup sup"></div>
+            <div class="s2d s3gon cup sup"></div>
+        </div>
+        <div class="open">
+            <div class="s2d s4gon lat inf"></div>
+            <div class="s2d s4gon lat inf"></div>
+            <div class="s2d s4gon lat inf"></div>
+            <div class="s2d s4gon lat inf"></div>
+            <div class="s2d s4gon lat inf"></div>
+            <div class="s2d s4gon cup inf"></div>
+            <div class="s2d s4gon cup inf"></div>
+            <div class="s2d s4gon cup inf"></div>
+            <div class="s2d s4gon cup inf"></div>
+            <div class="s2d s4gon cup inf"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat sup"></div>
+            <div class="s2d s4gon lat sup"></div>
+            <div class="s2d s4gon lat sup"></div>
+            <div class="s2d s4gon lat sup"></div>
+            <div class="s2d s4gon lat sup"></div>
+            <div class="s2d s4gon cup sup"></div>
+            <div class="s2d s4gon cup sup"></div>
+            <div class="s2d s4gon cup sup"></div>
+            <div class="s2d s4gon cup sup"></div>
+            <div class="s2d s4gon cup sup"></div>
+        </div>
+    </div>
+    <div class="s3d">
+        <div class="s12hedron">
+            <div class="s2d s5gon lat inf"></div>
+            <div class="s2d s5gon lat inf"></div>
+            <div class="s2d s5gon lat inf"></div>
+            <div class="s2d s5gon lat inf"></div>
+            <div class="s2d s5gon lat inf"></div>
+            <div class="s2d s5gon lat sup"></div>
+            <div class="s2d s5gon lat sup"></div>
+            <div class="s2d s5gon lat sup"></div>
+            <div class="s2d s5gon lat sup"></div>
+            <div class="s2d s5gon lat sup"></div>
+            <div class="s2d s5gon cup inf"></div>
+            <div class="s2d s5gon cup sup"></div>
+        </div>
+        <div class="s20hedron">
+            <div class="s2d s3gon lat inf"></div>
+            <div class="s2d s3gon lat inf"></div>
+            <div class="s2d s3gon lat inf"></div>
+            <div class="s2d s3gon lat inf"></div>
+            <div class="s2d s3gon lat inf"></div>
+            <div class="s2d s3gon cup inf"></div>
+            <div class="s2d s3gon cup inf"></div>
+            <div class="s2d s3gon cup inf"></div>
+            <div class="s2d s3gon cup inf"></div>
+            <div class="s2d s3gon cup inf"></div>
+            <div class="s2d s3gon lat sup"></div>
+            <div class="s2d s3gon lat sup"></div>
+            <div class="s2d s3gon lat sup"></div>
+            <div class="s2d s3gon lat sup"></div>
+            <div class="s2d s3gon lat sup"></div>
+            <div class="s2d s3gon cup sup"></div>
+            <div class="s2d s3gon cup sup"></div>
+            <div class="s2d s3gon cup sup"></div>
+            <div class="s2d s3gon cup sup"></div>
+            <div class="s2d s3gon cup sup"></div>
+        </div>
+        <div class="open">
+            <div class="s2d s4gon lat inf"></div>
+            <div class="s2d s4gon lat inf"></div>
+            <div class="s2d s4gon lat inf"></div>
+            <div class="s2d s4gon lat inf"></div>
+            <div class="s2d s4gon lat inf"></div>
+            <div class="s2d s4gon cup inf"></div>
+            <div class="s2d s4gon cup inf"></div>
+            <div class="s2d s4gon cup inf"></div>
+            <div class="s2d s4gon cup inf"></div>
+            <div class="s2d s4gon cup inf"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat mid"></div>
+            <div class="s2d s4gon lat sup"></div>
+            <div class="s2d s4gon lat sup"></div>
+            <div class="s2d s4gon lat sup"></div>
+            <div class="s2d s4gon lat sup"></div>
+            <div class="s2d s4gon lat sup"></div>
+            <div class="s2d s4gon cup sup"></div>
+            <div class="s2d s4gon cup sup"></div>
+            <div class="s2d s4gon cup sup"></div>
+            <div class="s2d s4gon cup sup"></div>
+            <div class="s2d s4gon cup sup"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container" style="text-align: center">
+
+    <form method="post" th:action="@{/Login}">
+        <button type="submit" class="btn btn-primary" style="background-color: #F988A4; color: white;">点击这里进行登陆</button>
+    </form>
+
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+<br>
+
+<!--<div class="container" style="text-align: center">-->
+<!--    <form method="post" th:action="@{/Register}">-->
+<!--        <button type="submit" class="btn btn-primary" style="background-color: #F988A4; color: white;">点击这里进行注册</button>-->
+<!--    </form>-->
+<!--</div>-->
+</body>

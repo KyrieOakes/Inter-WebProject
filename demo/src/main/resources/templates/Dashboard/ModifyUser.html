@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>信息修改</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+</head>
+
+
+<style>
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            display: flex;
+            font-family:sans-serif, sans-serif;
+            background-color: #f5f5f5;
+            animation: fadeIn ease 1s;
+        -webkit-animation: fadeIn ease 1s;
+        -moz-animation: fadeIn ease 1s;
+        -o-animation: fadeIn ease 1s;
+        -ms-animation: fadeIn ease 1s;
+        background-color: #f7f7f7;
+        background-image: url('https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=1800&t=st=1684656232~exp=1684656832~hmac=c8abedbd71bcc618da54bbb7b1088c6e50ec09a6433b8a6cdfa44b3364a1e004');
+        background-size: cover;
+        }
+        @keyframes fadeIn {
+        0% {opacity:0;}
+        100% {opacity:1;}
+    }
+        .main-nav, .forum-nav, .Hello {
+            margin: 10px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            overflow: auto;
+            box-sizing: border-box;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+        .main-nav:hover, .forum-nav:hover, .Hello:hover {
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+        }
+        .main-nav, .forum-nav {
+            width: 20%;
+            height: calc(100% - 20px);
+        }
+        .main {
+        width: 50%; /* 或者具体的宽度值 */
+        margin-left: auto;
+        margin-right: auto;
+        }
+        .Hello {
+            width: 60%;
+            height: calc(100% - 20px);
+        }
+        h2 {
+            color: #333;
+            font-weight: 500;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px 0;
+        }
+        li:hover {
+            color: #007BFF;
+            cursor: pointer;
+        }
+
+        #content {
+            color: green;
+            text-align: left;
+            font-size: 24px;
+            text-shadow: #333;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+    </style>
+
+
+<body>
+<div class="main-nav">
+    <h2>Home</h2>
+    <ul>
+        <br><br>
+        <li><a href="/Dashboard/UserList">用户列表</a></li>
+        <br><br>
+        <li><a href="/Dashboard/AddUser">添加用户</a></li>
+        <br><br>
+        <li><a href="/Dashboard/ModifyUser">修改用户</a></li>
+        <br><br>
+        <li><a href="/Dashboard/DeleteUser">删除用户</a></li>
+        <br><br>
+        <li><a href="/Dashboard/Logout">退出登录</a></li>
+    </ul>
+</div>
+
+
+<!-- 用户列表 -->
+<div class="container">
+    <h2>用户列表</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>用户名</th>
+            <th>密码</th>
+            <th>权限</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${usersList}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.password}"></td>
+            <td th:text="${user.role}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <button id="edit-btn" class="btn btn-primary" data-toggle="modal" data-target="#editModal">编辑用户</button>
+</div>
+
+<!-- 编辑用户的模态对话框 -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">编辑用户</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-form" th:action="@{/updateUser}" method="post">
+                    <div class="form-group">
+                        <label for="edit-id">用户ID:</label>
+                        <input type="text" class="form-control" id="edit-id" name="MyId"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-username">用户名:</label>
+                        <input type="text" class="form-control" id="edit-username" name="username"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-password">密码:</label>
+                        <input type="password" class="form-control" id="edit-password" name="password"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-role">权限:</label>
+                        <input type="text" class="form-control" id="edit-role" name="role"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 引入 Bootstrap JS 和依赖 -->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>

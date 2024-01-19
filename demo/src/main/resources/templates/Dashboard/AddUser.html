@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>用户管理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+</head>
+
+
+<style>
+
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            display: flex;
+            font-family:sans-serif, sans-serif;
+            background-color: #f5f5f5;
+            animation: fadeIn ease 1s;
+        -webkit-animation: fadeIn ease 1s;
+        -moz-animation: fadeIn ease 1s;
+        -o-animation: fadeIn ease 1s;
+        -ms-animation: fadeIn ease 1s;
+        background-color: #f7f7f7;
+        background-image: url('https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=1800&t=st=1684656232~exp=1684656832~hmac=c8abedbd71bcc618da54bbb7b1088c6e50ec09a6433b8a6cdfa44b3364a1e004');
+        background-size: cover;
+        }
+        @keyframes fadeIn {
+        0% {opacity:0;}
+        100% {opacity:1;}
+    }
+        .main-nav, .forum-nav, .Hello {
+            margin: 10px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            overflow: auto;
+            box-sizing: border-box;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+        .main-nav:hover, .forum-nav:hover, .Hello:hover {
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+        }
+        .main-nav, .forum-nav {
+            width: 20%;
+            height: calc(100% - 20px);
+        }
+        .main {
+        width: 50%; /* 或者具体的宽度值 */
+        margin-left: auto;
+        margin-right: auto;
+        }
+        .Hello {
+            width: 60%;
+            height: calc(100% - 20px);
+        }
+        h2 {
+            color: #333;
+            font-weight: 500;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px 0;
+        }
+        li:hover {
+            color: #007BFF;
+            cursor: pointer;
+        }
+
+        #content {
+            color: green;
+            text-align: left;
+            font-size: 24px;
+            text-shadow: #333;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+<!--        水杯-->
+h1 {
+    text-align: center;
+    font-size: 3em;
+    color: #243035;
+    margin: 5vh 0;
+    text-shadow: 1px 1px 1px #00000070, -1px -1px 1px #f1f1f12b;
+    position: relative;
+}
+
+.title {
+    position: relative;
+    text-align: center;
+    font-weight: bold;
+    font-size: 5em;
+    color: #00000000;
+}
+
+.title:before {
+    position: absolute;
+    content: "LIQUID";
+    text-shadow: 1px 1px 1px #00000045, 0px 0px 1px #a4f0ff70;
+}
+
+input.changepos {
+    width: 100%;
+    height: 320px;
+    opacity: 0;
+    position: absolute;
+    z-index: 3333;
+    margin: 0;
+    cursor: pointer;
+    outline: none;
+}
+
+.click {
+    position: relative;
+    margin: 0 auto;
+    width: 280px;
+    height: 320px;
+    top: 4vh;
+}
+
+.click:before, .click:after {
+    position: absolute;
+    bottom: -9vh;
+    text-align: center;
+    width: 200px;
+    font-size: 1.5em;
+    box-sizing: border-box;
+    filter: blur(1px);
+}
+
+.click:after {
+    filter: none;
+    color: #1c2428;
+}
+
+.click:hover:before, .click:hover:after {
+    color: #9fe7ff40;
+    text-shadow: 0 0 1px #9de8ff4f;
+}
+
+.glass {
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+    width: 200px;
+    height: 220px;
+    border-radius: 140px/50px;
+    background-color: rgb(255 255 255 / 0.15);
+    top: 0%;
+    border: 10px solid rgb(255 255 255 / 0.15);
+    box-shadow: 0px 5px 15px -10px #000;
+}
+
+.glass:before, .glass:after {
+    position: absolute;
+    left: -20px;
+    top: -10px;
+    width: 280px;
+    height: 105px;
+    border-radius: 140px/50px;
+    content: "";
+    border: 10px solid rgb(255 255 255 / 0.14);
+    box-sizing: border-box;
+    box-shadow: 0 0 100px 1000px #ffffff1f;
+    z-index: 333;
+}
+
+.glass:after {
+    top: initial;
+    bottom: -10px;
+    border: 10px solid rgb(255 255 255 / 5%);
+    box-shadow: none;
+    z-index: -1;
+}
+
+input.changepos + .drop + .glass {
+    animation: reshake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+input.changepos:checked + .drop + .glass {
+    animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px
+}
+
+.water {
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+    width: 260px;
+    height: 320px;
+    border-radius: 140px/50px;
+    background-color: rgb(3 169 244 / 0.5);
+    top: 16%;
+    animation: waterlevel 3.75s ease-out 0s 1;
+}
+
+.water:before {
+    position: absolute;
+    left: 0px;
+    top: 0;
+    width: 260px;
+    height: 85px;
+    border-radius: 130px/42px;
+    content: "";
+    box-shadow: 0 0 100px 0px #ffffff57;
+    z-index: 0;
+    background: radial-gradient(#80c2e038, #52a7cdb5, #00212f00);
+}
+
+.water:after {
+    position: absolute;
+    left: 0px;
+    top: 0;
+    width: 260px;
+    height: 95px;
+    border-radius: 140px/50px;
+    content: "";
+    z-index: 333;
+    background: rgb(0 188 212 / 15%);
+    bottom: 0;
+    z-index: -1;
+    background: rgb(0 188 212 / 5%);
+}
+
+.wave, .rewave {
+    position: relative;
+    width: 100%;
+    height: 105px;
+    top: -30px;
+    display: block;
+}
+
+
+.wave:before, .wave:after, .rewave:before, .rewave:after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 55%;
+    right: 50%;
+    transform: translate(50%) rotateX(75deg);
+    border-radius: 100%;
+    opacity: 0;
+    width: 85%;
+    height: 85%;
+    border: 8px solid rgb(91 174 212 / 0.75);
+    animation: dripple 4s ease-out 0s 1;
+}
+
+.wave:after, .rewave:after {
+    animation: dripple 4s ease-out 1s 1;
+}
+
+.rewave {
+    display: none;
+}
+
+
+input.changepos:checked + .drop + .glass>.water {
+    animation: rewaterlevel 3.75s ease-out 0s 1;
+}
+
+input.changepos:checked + .drop + .glass>.water>.rewave {
+    display: block;
+}
+
+input.changepos:checked + .drop + .glass>.water>.wave {
+    display: none;
+}
+
+.collection {
+    position: absolute;
+    bottom: 1.5em;
+    width: 100%;
+    text-align: center;
+}
+.collection a {
+    background: #ffffff29;
+    font-size: 0.9em;
+    font-family: Arial, Helvetica, sas;
+    padding: 0.5em;
+    box-sizing: border-box;
+    border-radius: 3px;
+    box-shadow: 0px 5px 15px -10px #000;
+    text-decoration: none;
+    color: #2f3d44;
+    font-weight: bold;
+}
+.collection a:hover {
+    color: #2c3a40;
+    text-shadow: 0 0 1px #242f34;
+    background: #13191b;
+}
+
+@keyframes dripple {
+    0% { width: 10px; height: 10px; opacity: 0; }
+    25% { opacity: 1; }
+    100% { width: 250px; height: 250px; top: -55%; opacity: 0; }
+}
+
+@keyframes waterlevel {
+      0% { top: 16%; transform: skewY(0deg);   skewX(0deg);   }
+     10% { top: 15%; transform: skewY(18deg);  skewX(10deg);  }
+     20% { top: 15%; transform: skewY(-18deg); skewX(-10deg); }
+     30% { top: 15%; transform: skewY(10deg);  skewX(7deg);   }
+     40% { top: 14%; transform: skewY(-10deg); skewX(-7deg);  }
+     50% { top: 14%; transform: skewY(5deg);   skewX(5deg);   }
+     60% { top: 14%; transform: skewY(-5deg);  skewX(-5deg);  }
+     70% { top: 15%; transform: skewY(3deg);   skewX(2deg);   }
+     80% { top: 15%; transform: skewY(-3deg);  skewX(-2deg);  }
+     90% { top: 15%; transform: skewY(2deg);   skewX(0deg);   }
+    100% { top: 16%; transform: skewY(0deg);   skewX(0deg);   }
+}
+
+@keyframes rewaterlevel {
+      0% { top: 16%; transform: skewY(0deg);   skewX(0deg);   }
+     10% { top: 15%; transform: skewY(18deg);  skewX(10deg);  }
+     20% { top: 15%; transform: skewY(-18deg); skewX(-10deg); }
+     30% { top: 15%; transform: skewY(10deg);  skewX(7deg);   }
+     40% { top: 14%; transform: skewY(-10deg); skewX(-7deg);  }
+     50% { top: 14%; transform: skewY(5deg);   skewX(5deg);   }
+     60% { top: 14%; transform: skewY(-5deg);  skewX(-5deg);  }
+     70% { top: 15%; transform: skewY(3deg);   skewX(2deg);   }
+     80% { top: 15%; transform: skewY(-3deg);  skewX(-2deg);  }
+     90% { top: 15%; transform: skewY(2deg);   skewX(0deg);   }
+    100% { top: 16%; transform: skewY(0deg);   skewX(0deg);   }
+}
+
+@keyframes shake {
+      0% { transform: translate(1px, 1px) rotate(0deg);    }
+     10% { transform: translate(-1px, -2px) rotate(-1deg); }
+     20% { transform: translate(-3px, 0px) rotate(1deg);   }
+     30% { transform: translate(3px, 2px) rotate(0deg);    }
+     40% { transform: translate(1px, -1px) rotate(1deg);   }
+     50% { transform: translate(-1px, 2px) rotate(-1deg);  }
+     60% { transform: translate(-3px, 1px) rotate(0deg);   }
+     70% { transform: translate(3px, 1px) rotate(-1deg);   }
+     80% { transform: translate(-1px, -1px) rotate(1deg);  }
+     90% { transform: translate(1px, 1px) rotate(0deg);    }
+    100% { transform: translate(1px, 1px) rotate(0deg);    }
+}
+
+@keyframes reshake {
+      0% { transform: translate(1px, 1px) rotate(0deg);    }
+     10% { transform: translate(-1px, -2px) rotate(-1deg); }
+     20% { transform: translate(-3px, 0px) rotate(1deg);   }
+     30% { transform: translate(3px, 2px) rotate(0deg);    }
+     40% { transform: translate(1px, -1px) rotate(1deg);   }
+     50% { transform: translate(-1px, 2px) rotate(-1deg);  }
+     60% { transform: translate(-3px, 1px) rotate(0deg);   }
+     70% { transform: translate(3px, 1px) rotate(-1deg);   }
+     80% { transform: translate(-1px, -1px) rotate(1deg);  }
+     90% { transform: translate(1px, 1px) rotate(0deg);    }
+    100% { transform: translate(1px, 1px) rotate(0deg);    }
+}
+
+input.changepos + .drop {
+    position: absolute;
+    width: 10px;
+    height: 12px;
+    background: #69b4d5;
+    border-radius: 100% 0 100% 100%;
+    border-bottom: 1px solid #3ea4d0;
+    z-index: 1;
+    opacity: 0;
+    top: 40px;
+    animation: dripping 2s ease-out 0.25s 1;
+    left: -8px;
+    transform: translate(14px, 5px) rotate(90deg);
+}
+
+input.changepos:checked + .drop {
+    animation: redripping 2s ease-out 0.25s 1;
+}
+
+input.changepos + .drop:before, input.changepos + .drop:after {
+    position: absolute;
+    width: 5px;
+    height: 6px;
+    background: #69b4d5;
+    border-radius: 100% 0 100% 100%;
+    border-bottom: 1px solid #3ea4d0;
+    z-index: 1;
+    content: "";
+    top: 5px;
+    left: -10px;
+    animation: minidrop 2.5s ease-out 0.25s 1;
+}
+
+input.changepos + .drop:after {
+    animation: minidrop 3.5s ease-out 0.25s 1;
+    top: 0px;
+    left: 0px;
+}
+
+input.changepos:checked + .drop:before {
+    animation: reminidrop 2.5s ease-out 0.25s 1;
+}
+
+input.changepos:checked + .drop:after {
+    animation: reminidrop 3.5s ease-out 0.25s 1;
+}
+
+@keyframes dripping {
+      0% { transform: translate(14px, 5px); rotate(90deg); opacity: 0;    }
+     15% { transform: translate(0px, 0px);  rotate(90deg); opacity: 1;    }
+     20% { transform: translate(-5px, 5px); rotate(5deg);  opacity: 1;    }
+     85% { opacity: 1;                                                    }
+    100% { transform: translate(-50px, 500px) rotate(-45deg); opacity: 0; }
+}
+
+@keyframes redripping {
+      0% { transform: translate(14px, 5px); rotate(90deg); opacity: 0;    }
+     15% { transform: translate(0px, 0px);  rotate(90deg); opacity: 1;    }
+     20% { transform: translate(-5px, 5px); rotate(5deg);  opacity: 1;    }
+     85% { opacity: 1;                                                    }
+    100% { transform: translate(-50px, 500px) rotate(-45deg); opacity: 0; }
+}
+
+@keyframes minidrop {
+      0% { transform: translate(14px, 5px);   }
+    100% { transform: translate(-50px, 50px); }
+}
+
+@keyframes reminidrop {
+      0% { transform: translate(14px, 5px);   }
+    100% { transform: translate(-50px, 50px); }
+}
+    </style>
+
+
+
+<body>
+<div class="main-nav">
+    <h2>Home</h2>
+    <ul>
+        <br><br>
+        <li><a href="/Dashboard/UserList">用户列表</a></li>
+        <br><br>
+        <li><a href="/Dashboard/AddUser">添加用户</a></li>
+        <br><br>
+        <li><a href="/Dashboard/ModifyUser">修改用户</a></li>
+        <br><br>
+        <li><a href="/Dashboard/DeleteUser">删除用户</a></li>
+        <br><br>
+        <li><a href="/Dashboard/Logout">退出登录</a></li>
+    </ul>
+</div>
+
+<div class="container">
+
+    <h1>创建用户</h1>
+    <br>
+    <br>
+    <p th:text="${Alert}">禁止任何特殊符号输入 <br> 长度小于 10!</p>
+    <br>
+    <br>
+    <form method="post" th:action="@{/AddUser_here}">
+        <div class="form-group">
+            <label for="username">用户名</label>
+            <input name="username" type="text" class="form-control" id="username" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input name="password" type="password" class="form-control" id="password" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="role">身份权限 Guest/Admin</label>
+            <input name="role" type="text" class="form-control" id="role" placeholder="">
+        </div>
+        <button type="submit" class="btn btn-primary">创建</button>
+    </form>
+
+
+    <div class="click">
+        <input type="checkbox" class="changepos">
+        <div class="drop"></div>
+        <div class="glass">
+            <div class="water">
+                <div class="wave"></div>
+                <div class="rewave"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>
