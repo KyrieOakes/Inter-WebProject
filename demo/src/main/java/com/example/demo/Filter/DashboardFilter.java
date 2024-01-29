@@ -1,53 +1,84 @@
 package com.example.demo.Filter;
 
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import com.example.demo.Database.Query;
+import com.example.demo.Database.UserInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.*;
-import javax.servlet.FilterConfig;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-
-@Component
-@Order(1)
+@WebFilter(urlPatterns = "/Dashboard/*")
 public class DashboardFilter implements Filter {
+
+    @Autowired
+    private Query query;
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        Filter.super.init(filterConfig);
+        // Custom initialization can go here if needed
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        if (servletRequest instanceof HttpServletRequest) {
+            HttpServletRequest request = (HttpServletRequest) servletRequest;
 
-        System.out.println("doing");
-        filterChain.doFilter(servletRequest,servletResponse);
+            // Perform the cookie query when entering the page
+            List<String> CookieFeedback = new ArrayList<>();
+            CookieFeedback = CheckCurrentUser(query, request);
+            for (int i = 0; i < CookieFeedback.size(); i++) {
+                System.out.println(CookieFeedback.get(i));
+            }
+
+            if (CookieFeedback.isEmpty()){
+                System.out.println("当前没有用户，如果报错，参考这条");
+            }else {
+                System.out.println("当前登陆用户为："+CookieFeedback.get(1));
+            }
+        }
+
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override
     public void destroy() {
-        Filter.super.destroy();
+        // Cleanup can go here if needed
     }
-//    @Override
-//    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-//            throws Exception {
-//        System.out.println("Entered preHandle interceptor.");
-//        return true;
-//    }
-//
-//    @Override
-//    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-//                           ModelAndView modelAndView) {
-//        System.out.println("Entered postHandle interceptor.");
-//    }
-//
-//    @Override
-//    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
-//                                Exception exception) {
-//        System.out.println("Entered afterCompletion iterceptor");
-//    }
+
+    public static List<String> CheckCurrentUser(Query query,HttpServletRequest request) {
+//        Query query = new Query();
+        Cookie[] cookies = request.getCookies();
+        List<String> finalResult = new ArrayList<>();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                String cookieID = cookie.getName();
+                String cookieValue = cookie.getValue();
+
+                // Attempt to convert cookieID to integer
+                try {
+                    int id = Integer.parseInt(cookieID);
+
+                    // Get all user info
+                    List<UserInfo> userInfos = query.AllInfo();
+                    for (UserInfo userInfo : userInfos) {
+                        if (userInfo.getId().equals(id) && userInfo.getUsername().equals(cookieValue)) {
+                            finalResult.add(cookieID);
+                            finalResult.add(cookieValue);
+                            // Return ID and name
+                            return finalResult;
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    // Log the exception or handle it as needed
+                }
+            }
+        }
+        return finalResult;
+    }
 }

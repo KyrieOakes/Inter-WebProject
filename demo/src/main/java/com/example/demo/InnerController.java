@@ -1,8 +1,16 @@
 package com.example.demo;
 
+
+import com.example.demo.Database.Grades;
 import com.example.demo.Database.Query;
 import com.example.demo.Database.UserInfo;
+import com.example.demo.RandomGenerator.ExcelReader;
+import com.example.demo.RandomGenerator.RandomDataToExcel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,26 +18,62 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+
+import static com.example.demo.Filter.DashboardFilter.CheckCurrentUser;
 
 @Controller
 public class InnerController {
     @Autowired
-    private Query query;
-    //-----------------------------用户列表部分-----------------------------
-    @GetMapping("/Dashboard/UserList")
-    public String showUsers(Model model, HttpServletRequest request) {
+    public Query query;
 
-        List<UserInfo> userInfos = query.AllInfo();
-        model.addAttribute("usersList", userInfos);
+
+
+    @GetMapping("/Dashboard/UserList")
+    public String showUsers(Model model,
+                            @RequestParam(defaultValue = "0") int page,         //接受 分页参数 page=当前页数
+                                                                                // size 每页显示的 行数
+                            @RequestParam(defaultValue = "10") int size) {
+
+        Page<UserInfo> userInfos = query.AllInfoTest(page, size);
+//        System.out.println("！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
+//        System.out.println("Total Pages: " + userInfos.getTotalPages());
+        model.addAttribute("usersList", userInfos.getContent());        // Page 自带的function 获取list<userinfo>
+        model.addAttribute("totalPages", userInfos.getTotalPages());    // 返回一个整数
+        model.addAttribute("currentPage", page);
+
+
         return "Dashboard/UserList";
     }
+
+    @RequestMapping("/AddRandomUser")
+    public String AddRandomUser(){
+
+
+        Boolean result = query.uploadData();
+
+        return "redirect:/Dashboard/UserList";
+    }
+
+    @RequestMapping("RmRandomUsers")
+    public String RmRandomUser(){
+        query.dropAll();
+
+        System.out.println("删除成功");
+        return "redirect:/Dashboard/UserList";
+    }
+
 
     //-----------------------------用户删除 部分-----------------------------
     //---------------------------------------------------------------------
     @GetMapping("/Dashboard/DeleteUser")
-    public String showUsersDelete(Model model, HttpServletRequest request) {
+    public String showUsersDelete(Model model, HttpServletRequest request,
+                                  @RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "10") int size) {
 
         List<UserInfo> userInfos = query.AllInfo();
         model.addAttribute("usersList_delete", userInfos);
@@ -152,7 +196,7 @@ public class InnerController {
     @RequestMapping(value = "/Dashboard/LogoutButton",method = RequestMethod.POST)
     public String Logout(HttpServletResponse response, HttpServletRequest request) {
         List<String> CookieFeedback = new ArrayList<>();
-        CookieFeedback = CheckCurrentUser(request);
+        CookieFeedback = CheckCurrentUser(query, request);
         if( CookieFeedback.size() == 0){
             return "redirect:/Error/501";
         }
@@ -168,6 +212,23 @@ public class InnerController {
         return "redirect:/Login";
     }
 
+    //-----------------------------Grades-----------------------------
+    //---------------------------------------------------------------------
+
+    @GetMapping("/Dashboard/ViewGrades")
+    public String initGrades(Model model) {
+        List<Grades> grades = query.AllGrades();
+        model.addAttribute("grades", grades);
+
+        // 添加日志输出
+        System.out.println("Grades size: " + grades.size());
+        grades.forEach(grade -> System.out.println(grade));
+
+        return "Dashboard/ViewGrades";
+    }
+
+
+
 
 
     //-----------------------------检查 是否有 非法输入-----------------------------
@@ -181,36 +242,6 @@ public class InnerController {
 
         return  result;
     }
-
-    public List<String> CheckCurrentUser(HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
-        List<String> FinalResult = new ArrayList<>();
-
-        if(cookies != null) {
-            for (int i = 0; i < cookies.length; i++) {
-                String cookieID = cookies[i].getName();
-                String cookieValue = cookies[i].getValue();
-                // 获取所有用户 关注ID
-                List<UserInfo> userInfos = query.AllInfo();
-                for (int j = 0; j < userInfos.size(); j++) {
-                    //先 转换 ID
-                    try {
-                        int Id=Integer.parseInt(cookieID);
-                        if (userInfos.get(j).getId().equals(Id) && userInfos.get(j).getUsername().equals(cookieValue)){
-                            FinalResult.add(cookieID);
-                            FinalResult.add(cookieValue);
-                            // 返回 ID 和 name
-                            return FinalResult;
-                        }
-                    }catch (Exception e){
-                        continue;
-                    }
-                }
-            }
-        }
-        return FinalResult;
-    }
-
 
 
 }

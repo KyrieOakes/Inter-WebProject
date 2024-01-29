@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <title>登入</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+</head>
+
+<style>* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(to right, #5BFDF8, #ED5781, #EC1D56);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container{
+  position: relative;
+  flex-direction:row-reverse
+  display: flex;
+<!--  justify-content: center;-->
+<!--  align-items: center;-->
+}
+
+.loader {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader::before {
+  content: "";
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(8px);
+  position: absolute;
+  width: 140px;
+  height: 55px;
+  z-index: 20;
+  border-radius: 0 0 10px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.274);
+  border-top: none;
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.082);
+  animation: anim2 2s infinite;
+}
+
+.loader div {
+  background: rgb(228, 228, 228);
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  z-index: -1;
+  animation: anim 2s infinite linear;
+  animation-delay: calc(-0.3s * var(--i));
+  transform: translateY(5px);
+  margin: 0.2em;
+}
+
+@keyframes anim {
+  0%,
+  100% {
+    transform: translateY(5px);
+  }
+  50% {
+    transform: translateY(-65px);
+  }
+}
+
+@keyframes anim2 {
+  0%,
+  100% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+}
+</style>
+
+<body>
+<div class="container">
+    <h1>登入</h1>
+
+    <h3 th:text="${result}">Please enter your account and pw below.</h3>
+
+
+    <form method="post" th:action="@{/Login_Check}">
+        <div class="form-group">
+            <label for="username">用户名</label>
+            <input name="username" type="text" class="form-control" id="username" placeholder="输入用户名">
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input name="password" type="password" class="form-control" id="password" placeholder="输入密码">
+        </div>
+        <button type="submit" class="btn btn-primary">登入</button>
+    </form>
+    <br>
+
+    <div class="container" style="text-align: center">
+        <form method="post" th:action="@{/Register}">
+            <button type="submit" class="btn btn-primary">Register!</button>
+        </form>
+    </div>
+
+<br><br><br><br><br>
+
+    <div class="loader">
+        <div style="--i: 1"></div>
+        <div style="--i: 2"></div>
+        <div style="--i: 3"></div>
+        <div style="--i: 4"></div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
